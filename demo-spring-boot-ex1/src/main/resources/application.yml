@@ -1,0 +1,13 @@
+server.port: 8085
+
+api:
+  finnhub:
+    domain: 'finnhub.io'
+    endpoints: '/api/v1'
+    stock: 
+      profile: '/stock/profile2'
+    quote: 
+      profile: '/quote'
+    temp:
+      param1: '?symbol=AAPL'
+      param2: '&token=ck4flrhr01qus81pv4o0ck4flrhr01qus81pv4og'
