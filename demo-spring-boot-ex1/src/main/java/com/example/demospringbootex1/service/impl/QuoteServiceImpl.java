@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import com.example.demospringbootex1.infra.BusinessException;
 import com.example.demospringbootex1.infra.Protocol;
 import com.example.demospringbootex1.model.Quote;
 import com.example.demospringbootex1.service.QuoteService;
@@ -31,15 +32,15 @@ public class QuoteServiceImpl implements QuoteService {
   private String tempP2; // from yml
 
   @Override
-  public Quote findQuote() { // throws BusinessException{
+  public Quote findQuote(String symbol) throws BusinessException{ // throws BusinessException{
     String url = UriComponentsBuilder.newInstance() //
         .scheme(Protocol.HTTPS.name()) //
         .host(finnhub) //
         .path(endpoints) //
         .path(quoteProfile) //
-        .path(tempP1) //
+        .queryParam("symbol", symbol) //
         .path(tempP2) //
-        .build()// slove %3 problem
+        // .build()// slove %3F problem
         .toUriString();
 
     System.out.println("url=" + url);

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import com.example.demospringbootex1.infra.BusinessException;
 import com.example.demospringbootex1.infra.Protocol;
 import com.example.demospringbootex1.model.Stock;
 import com.example.demospringbootex1.service.StockService;
@@ -33,15 +34,15 @@ public class StockServiceImpl implements StockService {
 
 
   @Override
-  public Stock findStock() { // throws BusinessException{
+  public Stock findStock(String symbol) throws BusinessException{ // throws BusinessException{
     String url = UriComponentsBuilder.newInstance() //
         .scheme(Protocol.HTTPS.name()) //
         .host(finnhub) //
         .path(endpoints) //
         .path(stockProfile) //
-        .path(tempP1) //
+        .queryParam("symbol", symbol) //
         .path(tempP2) //
-        .build()
+        // .build()
         .toUriString();
 
     System.out.println("url=" + url);

@@ -31,8 +31,8 @@ public class QuoteController implements QuoteOperation {
   // }
 
   @Override
-  public Quote findQuote() {// throws Exception{
-    return quoteService.findQuote();
+  public Quote findQuote(String symbol) throws Exception{// throws Exception{
+    return quoteService.findQuote(symbol);
   }
 }
 

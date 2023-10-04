@@ -31,8 +31,8 @@ public class StockController implements StockOperation {
   // }
 
   @Override
-  public Stock findStock() {// throws Exception{
-    return stockService.findStock();
+  public Stock findStock(String symbol) throws Exception{// throws Exception{
+    return stockService.findStock(symbol);
   }
 
 }

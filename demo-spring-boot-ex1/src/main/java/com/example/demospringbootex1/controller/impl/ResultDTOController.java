@@ -20,9 +20,9 @@ public class ResultDTOController implements ResultDTOOperation {
   StockService stockService;
 
   @Override
-   public ResultDTO map() {
+   public ResultDTO map(String symbol) throws Exception{
 
-    return ResultMapper.map(stockService.findStock(), quoteService.findQuote());
+    return ResultMapper.map(stockService.findStock(symbol), quoteService.findQuote(symbol));
    }
 
 }
