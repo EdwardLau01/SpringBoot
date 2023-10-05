@@ -1,18 +1,17 @@
 package com.hkjava.demo.demofinnhub.service.impl;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hkjava.demo.demofinnhub.entity.Stock;
 import com.hkjava.demo.demofinnhub.entity.StockPrice;
@@ -28,8 +27,8 @@ import com.hkjava.demo.demofinnhub.repository.StockRepository;
 import com.hkjava.demo.demofinnhub.repository.StockSymbolRepository;
 import com.hkjava.demo.demofinnhub.service.CompanyService;
 import com.hkjava.demo.demofinnhub.service.StockPriceService;
+
 import jakarta.persistence.EntityNotFoundException;
-import lombok.val;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -190,7 +189,7 @@ public class CompanyServiceImpl implements CompanyService {
         .queryParam("token", token) //
         .build() //
         .toUriString();
-    String key = RedisHelper.key(redisKeyForProfile2, symbol);
+    String key = RedisHelper.formatKey(redisKeyForProfile2, symbol);
 
     // Invoke Company Profile 2 with Redis Handling
     try {
@@ -203,10 +202,6 @@ public class CompanyServiceImpl implements CompanyService {
         if (profile == null)
           throw new FinnhubException(Code.FINNHUB_PROFILE2_NOTFOUND);
       }
-      Integer integer = new Integer("12");
-      BigDecimal bigDecimal = new BigDecimal("12.0");
-      BigDecimal bigDecimal2 = BigDecimal.valueOf(10.0);
-
       return profile;
     } catch (RestClientException e) {
       CompanyProfile2DTO profileFromRedis = (CompanyProfile2DTO) redisHelper.get(key);

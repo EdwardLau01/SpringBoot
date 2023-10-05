@@ -14,10 +14,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import com.hkjava.demo.demofinnhub.annotation.SymbolCheck;
 import com.hkjava.demo.demofinnhub.controller.impl.StockController;
+import com.hkjava.demo.demofinnhub.model.dto.web.req.SymbolReqDTO;
 import com.hkjava.demo.demofinnhub.model.dto.web.resp.CompanyProfileDTO;
 import com.hkjava.demo.demofinnhub.model.dto.web.resp.StockDTO;
 import com.hkjava.demo.demofinnhub.service.WebStockService;
+import jakarta.validation.ConstraintValidator;
 
 @WebMvcTest(StockController.class)
 @ActiveProfiles("test")
@@ -28,6 +31,9 @@ public class StockControllerTest {
 
   @MockBean
   private WebStockService webStockService;
+
+  @MockBean
+  private ConstraintValidator<SymbolCheck, SymbolReqDTO> validator;
 
   @Test
   void testGetUsers() throws Exception {
@@ -41,6 +47,8 @@ public class StockControllerTest {
         .prevDayClose(169.99).build();
 
     Mockito.when(webStockService.stockInfo("AAPL")).thenReturn(mockDTO);
+    // Mockito.when(validator.isValid(new SymbolReqDTO("AAPL"), context))
+    //     .thenReturn(true);
 
     mockMvc.perform(get("/api/v1/stock").param("symbol", "AAPL")) //
         .andExpect(status().isOk()) // HTTP 200
